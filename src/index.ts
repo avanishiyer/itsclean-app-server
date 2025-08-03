@@ -13,7 +13,7 @@ const app = express();
 app.use(express.json());
 const port = Number(process.env.PORT) || 3000;
 const corsOptions = {
-  origin: [`http://localhost:${port}`],
+  origin: [`http://localhost:${port}`, `http://localhost:8081`],
 };
 
 app.use(cors(corsOptions));
