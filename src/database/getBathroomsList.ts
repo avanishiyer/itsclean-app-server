@@ -15,7 +15,7 @@ export default async function getBathroomsList(
     client.end();
     return result.rows;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return -1;
   }
 }

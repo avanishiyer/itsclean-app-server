@@ -2,9 +2,8 @@ import getDBClient from "./connect";
 
 export default async function getBathroomById(
   bathroom_id: number
-): Promise<Array<generalBathroomItem> | null | -1> {
+): Promise<generalBathroomItem | null | -1> {
   const client = await getDBClient();
-  console.log(bathroom_id);
 
   try {
     const result = await client.query(`
@@ -17,9 +16,9 @@ export default async function getBathroomById(
 
     if (result.rowCount == 0) return null;
 
-    return result.rows;
+    return result.rows[0];
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return -1;
   }
 }

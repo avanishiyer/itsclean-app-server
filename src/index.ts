@@ -1,9 +1,11 @@
+import { log } from "console";
 import cors from "cors";
 import dotenv from "dotenv";
 import express, { Request, Response } from "express";
 import checkIfBathroomExists from "./database/checkIfBathroomExists";
 import getBathroomById from "./database/getBathroomById";
 import getBathroomsList from "./database/getBathroomsList";
+import getCommentByBathroom from "./database/getCommentByBathroom";
 import postBathroomComment from "./database/postBathroomComment";
 import postBathroomReview from "./database/postBathroomReview";
 
@@ -13,7 +15,7 @@ const app = express();
 app.use(express.json());
 const port = Number(process.env.PORT) || 3000;
 const corsOptions = {
-  origin: [`http://localhost:${port}`, `http://localhost:8081`],
+  origin: false,
 };
 
 app.use(cors(corsOptions));
@@ -58,6 +60,25 @@ app.get(
   }
 );
 
+app.get(
+  "/get/comments_by_bathroom_id/:bathroom_id",
+  (req: Request, res: Response) => {
+    async (req: Request, res: Response): Promise<Response> => {
+      const bathroom_id = Number(req.params.bathroom_id);
+
+      const data = await getCommentByBathroom(bathroom_id);
+      if (data == -1) {
+        return res.send("Server issue").status(500);
+      }
+      if (data == null) {
+        return res.send("Index does not exist").status(400);
+      }
+
+      return res.send(data).status(200);
+    };
+  }
+);
+
 app.post(
   "/post/review",
   async (req: Request, res: Response): Promise<Response> => {
@@ -75,7 +96,6 @@ app.post(
     if (data == -1) {
       return res.send("Server issue").status(500);
     }
-    console.log(data);
 
     return res.status(200);
   }
@@ -105,7 +125,6 @@ app.post(
     if (data == -1) {
       return res.send("Server issue").status(500);
     }
-    console.log(data);
 
     return res.status(200);
   }

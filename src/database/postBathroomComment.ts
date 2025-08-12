@@ -32,7 +32,7 @@ export default async function postBathroomComment(
 
     return;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return -1;
   }
 }

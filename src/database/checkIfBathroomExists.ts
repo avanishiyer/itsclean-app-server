@@ -20,7 +20,7 @@ export default async function checkIfBathroomExists(
     }
     return true;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return -1;
   }
 }

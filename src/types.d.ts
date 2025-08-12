@@ -66,3 +66,16 @@ interface insertBathroomComment {
   maintenance_rating: rating;
   is_closed: boolean;
 }
+interface generalBathroomComment {
+  id: number;
+  commenter_name: string;
+  comment_text: string;
+  created_at: Date;
+  review_id: number;
+  cleanvalue: rating;
+  safetyvalue: rating;
+  accessibilityvalue: rating;
+  facilitiesvalue: rating;
+  is_closed: boolean;
+  maintenancevalue: rating;
+}
