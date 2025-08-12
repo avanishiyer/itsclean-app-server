@@ -62,20 +62,19 @@ app.get(
 
 app.get(
   "/get/comments_by_bathroom_id/:bathroom_id",
-  (req: Request, res: Response) => {
-    async (req: Request, res: Response): Promise<Response> => {
-      const bathroom_id = Number(req.params.bathroom_id);
+  async (req: Request, res: Response): Promise<Response> => {
+    const bathroom_id = Number(req.params.bathroom_id);
+    console.log(bathroom_id);
 
-      const data = await getCommentByBathroom(bathroom_id);
-      if (data == -1) {
-        return res.send("Server issue").status(500);
-      }
-      if (data == null) {
-        return res.send("Index does not exist").status(400);
-      }
+    const data = await getCommentByBathroom(bathroom_id);
+    if (data == -1) {
+      return res.send("Server issue").status(500);
+    }
+    if (data == null) {
+      return res.send("Index does not exist").status(400);
+    }
 
-      return res.send(data).status(200);
-    };
+    return res.send(data).status(200);
   }
 );
 
