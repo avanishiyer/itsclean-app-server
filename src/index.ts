@@ -84,8 +84,10 @@ app.post(
     const isProperReview = (
       value: insertBathroomReview
     ): value is insertBathroomReview => !!value?.name;
+    console.log(req.body);
 
     if (!isProperReview(req.body)) {
+      console.log("?");
       return res.send("Improper request format").status(400);
     }
 

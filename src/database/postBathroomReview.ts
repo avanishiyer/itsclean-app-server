@@ -6,6 +6,7 @@ export default async function postBathroomReview(
 ): Promise<-1> {
   const client = await getDBClient();
   const currentTimeZ = DateTime.utc().toLocal();
+  console.log(details);
 
   try {
     const result = await client.query(
@@ -22,17 +23,18 @@ export default async function postBathroomReview(
         null,
         details.lat,
         details.lng,
-        details.cleanliness_rating,
-        details.safety_rating,
-        details.accessibility_rating,
-        details.facilities_rating,
-        details.functionality_rating,
-        details.maintenance_rating,
+        details.cleanliness_rating || 0,
+        details.safety_rating || 0,
+        details.accessibility_rating || 0,
+        details.facilities_rating || 0,
+        details.functionality_rating || 0,
+        details.maintenance_rating || 0,
         details.is_closed,
         currentTimeZ,
       ]
     );
     client.end();
+    console.log(result);
 
     return;
   } catch (error) {
