@@ -14,12 +14,17 @@ interface generalBathroomList {
   id: number;
   location: string;
   review_text: string;
-  created_at: Date;
   name: string;
-  lat: number;
-  lng: number;
   cleanliness_rating: rating;
   is_closed: boolean;
+}
+
+interface bathroomCoordinates {
+  id: number;
+  location: string;
+  cleanliness_rating: rating;
+  lng: number;
+  lat: number;
 }
 
 interface generalBathroomItem {

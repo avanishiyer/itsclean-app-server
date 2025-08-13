@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express, { Request, Response } from "express";
 import checkIfBathroomExists from "./database/checkIfBathroomExists";
+import getAllBathroomCoordinates from "./database/getAllBathroomCoordinates";
 import getBathroomById from "./database/getBathroomById";
 import getBathroomsList from "./database/getBathroomsList";
 import getCommentByBathroom from "./database/getCommentByBathroom";
@@ -21,22 +22,22 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
+app.get("/get/list", async (req: Request, res: Response): Promise<Response> => {
+  const data = await getBathroomsList();
+  if (data == -1) {
+    return res.send("Server issue").status(500);
+  } else {
+  }
+
+  return res.send(data).status(200);
+});
+
 app.get(
-  "/get/range/:bot_range/:top_range",
+  "/get/bathroom_coordinates/all",
   async (req: Request, res: Response): Promise<Response> => {
-    const bot_range = Number(req.params.bot_range);
-    const top_range = Number(req.params.top_range);
-    const range = top_range - bot_range;
-    const max_acceptable_range = 30;
-
-    if (range > max_acceptable_range || range < 0) {
-      return res.send("Invalid range").status(400);
-    }
-
-    const data = await getBathroomsList(bot_range, top_range);
+    const data = await getAllBathroomCoordinates();
     if (data == -1) {
       return res.send("Server issue").status(500);
-    } else {
     }
 
     return res.send(data).status(200);
