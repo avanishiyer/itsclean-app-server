@@ -60,7 +60,6 @@ interface insertBathroomReview {
 }
 
 interface insertBathroomComment {
-  bathroom_id: number;
   name: string;
   comment_text: string;
   cleanliness_rating: rating;

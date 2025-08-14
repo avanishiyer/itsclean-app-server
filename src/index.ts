@@ -65,7 +65,6 @@ app.get(
   "/get/comments_by_bathroom_id/:bathroom_id",
   async (req: Request, res: Response): Promise<Response> => {
     const bathroom_id = Number(req.params.bathroom_id);
-    console.log(bathroom_id);
 
     const data = await getCommentByBathroom(bathroom_id);
     if (data == -1) {
@@ -104,8 +103,9 @@ app.post(
 );
 
 app.post(
-  "/post/comment",
+  "/post/comment/:bathroom_id",
   async (req: Request, res: Response): Promise<Response> => {
+    const bathroom_id = Number(req.params.bathroom_id);
     const isProperComment = (
       value: insertBathroomComment
     ): value is insertBathroomComment => !!value?.name;
@@ -116,14 +116,14 @@ app.post(
 
     const comment: insertBathroomComment = req.body;
 
-    const exists = await checkIfBathroomExists(comment.bathroom_id);
+    const exists = await checkIfBathroomExists(bathroom_id);
     if (exists == -1) {
       return res.send("Server issue").status(500);
     } else if (exists == false) {
       return res.send("Bathroom does not exist").status(400);
     }
 
-    const data = await postBathroomComment(comment);
+    const data = await postBathroomComment(comment, bathroom_id);
     if (data == -1) {
       return res.send("Server issue").status(500);
     }

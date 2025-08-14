@@ -15,7 +15,6 @@ export default async function getCommentByBathroom(
     client.end();
 
     if (result.rowCount == 0) return null;
-    console.log(result.rows);
 
     return result.rows;
   } catch (error) {

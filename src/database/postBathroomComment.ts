@@ -2,8 +2,9 @@ import { DateTime } from "luxon";
 import getDBClient from "./connect";
 
 export default async function postBathroomComment(
-  details: insertBathroomComment
-): Promise<-1> {
+  details: insertBathroomComment,
+  bathroom_id: number
+): Promise<void | -1> {
   const client = await getDBClient();
   const currentTimeZ = DateTime.utc().toLocal();
 
@@ -16,9 +17,9 @@ export default async function postBathroomComment(
     `,
       [
         details.name,
-        details.comment_text,
+        details.comment_text || "",
         currentTimeZ,
-        details.bathroom_id,
+        bathroom_id,
         details.cleanliness_rating,
         details.safety_rating,
         details.accessibility_rating,
