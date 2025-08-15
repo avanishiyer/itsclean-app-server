@@ -8,7 +8,7 @@ export default async function getBathroomsList(): Promise<
   try {
     const result = await client.query(`
     SELECT id, location, name, review_text, cleanliness_rating, is_closed
-    FROM myapp_review
+    FROM myapp_review ORDER BY id DESC
     `);
     client.end();
     return result.rows;

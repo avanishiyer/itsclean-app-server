@@ -24,6 +24,7 @@ app.use(express.json());
 
 app.get("/get/list", async (req: Request, res: Response): Promise<Response> => {
   const data = await getBathroomsList();
+  console.log(data);
   if (data == -1) {
     return res.send("Server issue").status(500);
   } else {
@@ -93,12 +94,12 @@ app.post(
 
     const review: insertBathroomReview = req.body;
 
-    const data = await postBathroomReview(review);
-    if (data == -1) {
+    const id = await postBathroomReview(review);
+    if (id == -1) {
       return res.send("Server issue").status(500);
     }
 
-    return res.status(200);
+    return res.send(id).status(200);
   }
 );
 

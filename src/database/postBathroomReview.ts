@@ -3,7 +3,7 @@ import getDBClient from "./connect";
 
 export default async function postBathroomReview(
   details: insertBathroomReview
-): Promise<-1> {
+): Promise<number> {
   const client = await getDBClient();
   const currentTimeZ = DateTime.utc().toLocal();
   console.log(details);
@@ -13,7 +13,7 @@ export default async function postBathroomReview(
       `
       INSERT INTO myapp_review (location, review_text, created_at, name, image, lat, lng, 
       cleanliness_rating, safety_rating, accessibility_rating, facilities_rating, functionality_rating, maintenance_rating, is_closed, updated_at)
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15) RETURNING id
     `,
       [
         details.location,
@@ -34,9 +34,12 @@ export default async function postBathroomReview(
       ]
     );
     client.end();
-    console.log(result);
-
-    return;
+    if (result.rows.length > 0) {
+      const newId = result.rows[0].id;
+      console.log("Inserted review with ID:", newId);
+      return newId;
+    }
+    return -1;
   } catch (error) {
     console.error(error);
     return -1;
