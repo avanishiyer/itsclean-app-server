@@ -6,7 +6,6 @@ export default async function postBathroomReview(
 ): Promise<number> {
   const client = await getDBClient();
   const currentTimeZ = DateTime.utc().toLocal();
-  console.log(details);
 
   try {
     const result = await client.query(
@@ -36,7 +35,6 @@ export default async function postBathroomReview(
     client.end();
     if (result.rows.length > 0) {
       const newId = result.rows[0].id;
-      console.log("Inserted review with ID:", newId);
       return newId;
     }
     return -1;

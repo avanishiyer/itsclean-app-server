@@ -24,7 +24,6 @@ app.use(express.json());
 
 app.get("/get/list", async (req: Request, res: Response): Promise<Response> => {
   const data = await getBathroomsList();
-  console.log(data);
   if (data == -1) {
     return res.send("Server issue").status(500);
   } else {
@@ -85,10 +84,8 @@ app.post(
     const isProperReview = (
       value: insertBathroomReview
     ): value is insertBathroomReview => !!value?.name;
-    console.log(req.body);
 
     if (!isProperReview(req.body)) {
-      console.log("?");
       return res.send("Improper request format").status(400);
     }
 
