@@ -17,6 +17,7 @@ interface generalBathroomList {
   name: string;
   cleanliness_rating: rating;
   is_closed: boolean;
+  image: string | null;
 }
 
 interface bathroomCoordinates {
