@@ -1,4 +1,3 @@
-import { log } from "console";
 import cors from "cors";
 import dotenv from "dotenv";
 import express, { Request, Response } from "express";
@@ -131,5 +130,5 @@ app.post(
 );
 
 app.listen(port, () => {
-  console.log(`Backend API listening at http://localhost:${port}`);
+  console.log(`Backend API listening`);
 });
